@@ -1,5 +1,5 @@
 export const useGetCurrentGeolocation = () => {
-  const token = process.env.REACT_APP_CURRENT_GEOLOCATION_TOKEN;
+  const token = process.env.VITE_CURRENT_GEOLOCATION_TOKEN;
   const url = `https://ipinfo.io/json?token=${token}`;
 
   const currentGeolocation = async () => {

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useGetCurrentGeolocation } from "../../api/useGetCurrentGeolocation/useGetCurrentGeolocation";
+import { useGetCurrentGeolocation } from "@/api/useGetCurrentGeolocation/useGetCurrentGeolocation";
+import { useEffect } from "react";
 
 export const HomePage = () => {
   const { currentGeolocation } = useGetCurrentGeolocation();
