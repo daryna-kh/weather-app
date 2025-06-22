@@ -1,12 +1,13 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { GetGeolocationList } from "./components/GetGeolocationList/GetGeolocationList";
-import { HomePage } from "./components/HomePage/HomePage";
+import { Home } from "./components/Home/Home";
+import { Header } from "./components/Header /Header";
+import { Footer } from "./components/Footer/Footer";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <Home />,
     children: [
       {
         // path: "/:location",
@@ -17,5 +18,11 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Header />
+      <RouterProvider router={router} />
+      <Footer />
+    </>
+  );
 }
