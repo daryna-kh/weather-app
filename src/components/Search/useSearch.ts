@@ -1,35 +1,54 @@
-import { city as cities } from "@/mock/city/city";
+import { getCitiesList } from "@/api/getCitiesList/getCitiesList";
+import { CityType } from "@/mock/city/types";
 import { cleanString } from "@/util/cleanString";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-
-type FormData = {
-  location: string;
-};
 
 export const useSearch = () => {
-  const [searchString, setSearchString] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [debounceValue, setDebounceValue] = useState<string>("");
+
+  const fetchSuggestions = async (val: string) => {
+    try {
+      const responce = await getCitiesList(val);
+      return responce;
+    } catch (err) {
+      console.warn("Can not get cities list", err);
+      return null;
+    }
+  };
+
   const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: {
-      location: "",
-    },
+    data: suggestion = [],
+    isFetching,
+    isError,
+  } = useQuery<CityType[] | null>({
+    queryKey: ["suggestion", debounceValue],
+    queryFn: () => fetchSuggestions(debounceValue),
+    enabled: debounceValue.length >= 2,
+    staleTime: 5 * 60 * 1000,
+    placeholderData: (prevData) => prevData,
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const getFilteredOptions = (): OptionsType[] => {
+    if (isFetching) {
+      return [{ value: "Searching...", disabled: true }];
+    }
 
-  // const watchLocation = watch();
+    if (isError || !suggestion) {
+      return [{ value: "Error fetching data", disabled: true }];
+    }
 
-  // useEffect(() => {
-  //   const subscription = watch((data) => setSearchString(data.location || ""));
-  //   return () => subscription.unsubscribe();
-  // }, [watch]);
+    return suggestion.filter((item) => cleanString(item.name).includes(cleanString(debounceValue))).map((item) => ({ value: item.name }));
+  };
 
-  // const filteredCities = cities.filter((city) => cleanString(city.name).includes(cleanString(searchString)));
+  useEffect(() => {
+    const handleInputTimeout = setTimeout(() => {
+      setDebounceValue(inputValue);
+    }, 500);
 
-  return { register, onSubmit };
+    return () => clearTimeout(handleInputTimeout);
+  }, [inputValue]);
+
+  return { getFilteredOptions, setInputValue };
 };
