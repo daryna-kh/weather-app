@@ -1,16 +1,16 @@
-interface Coord {
+export interface Coord {
   lon: number;
   lat: number;
 }
 
-interface Weather {
+export interface Weather {
   id: number;
   main: string;
   description: string;
   icon: string;
 }
 
-interface Main {
+export interface Main {
   temp: number;
   feels_like: number;
   temp_min: number;
@@ -21,21 +21,21 @@ interface Main {
   grnd_level?: number;
 }
 
-interface Wind {
+export interface Wind {
   speed: number;
   deg: number;
   gust?: number;
 }
 
-interface Rain {
+export interface Rain {
   "1h": number;
 }
 
-interface Clouds {
+export interface Clouds {
   all: number;
 }
 
-interface Sys {
+export interface Sys {
   type?: number;
   id?: number;
   country: string;
