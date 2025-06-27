@@ -1,27 +1,10 @@
-import { cleanString } from "@/util/cleanString";
-import { useSearch } from "./useSearch";
 import { AutoComplete } from "antd";
-import { city } from "@/mock/city/city";
-import { useMemo } from "react";
+import { useSearch } from "./useSearch";
 
 export const Search = () => {
-  const { register, onSubmit } = useSearch();
-  const options = useMemo(() => {
-    return city.map((el) => ({
-      value: el.name,
-      label: `${el.name}`,
-    }));
-  }, [city]);
+  const { getFilteredOptions, setInputValue, handleSelect } = useSearch();
 
   return (
-    <form onSubmit={onSubmit}>
-      <AutoComplete
-        {...register("location")}
-        style={{ width: 450, color: "#000000" }}
-        options={options}
-        placeholder="Search City"
-        filterOption={(inputValue, option) => option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-      />
-    </form>
+    <AutoComplete style={{ width: 450, color: "#000000" }} options={getFilteredOptions()} onSearch={setInputValue} onSelect={(val, option) => handleSelect(val, option)} placeholder="Search City" />
   );
 };
