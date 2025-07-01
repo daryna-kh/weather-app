@@ -2,6 +2,7 @@ import { getCitiesList } from "@/api/getCitiesList/getCitiesList";
 import { getDataByCity } from "@/api/getDataByCity/getDataByCity";
 import { WeatherResponse } from "@/api/getDataByCity/type";
 import { CityType } from "@/mock/city/types";
+import { useCommonStore } from "@/store/useCommonStore";
 import { cleanString } from "@/util/cleanString";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -10,6 +11,8 @@ export const useSearch = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [debounceValue, setDebounceValue] = useState<string>("");
   const [currentCityData, setCurrentCityData] = useState<WeatherResponse[] | null>();
+
+  const setCity = useCommonStore((state) => state.setCity);
 
   const fetchSuggestions = async (val: string) => {
     try {
@@ -46,8 +49,7 @@ export const useSearch = () => {
   };
 
   const handleSelect = async (val: string, option: OptionsType) => {
-    const responce = await getDataByCity(val);
-    setCurrentCityData(responce);
+    setCity(val);
   };
 
   useEffect(() => {

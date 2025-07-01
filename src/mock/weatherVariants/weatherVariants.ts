@@ -21,13 +21,13 @@ export const weatherVariants = [
     id: 803,
     main: "Clouds",
     description: "broken clouds",
-    icon: "04d",
+    icon: "03d",
   },
   {
     id: 804,
     main: "Clouds",
     description: "overcast clouds",
-    icon: "04d",
+    icon: "03d",
   },
   {
     id: 500,
