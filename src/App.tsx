@@ -1,28 +1,17 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./components/Home/Home";
-import { Header } from "./components/Header /Header";
-import { Footer } from "./components/Footer/Footer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Main } from "./components/Main/Main";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    children: [
-      {
-        // path: "/:location",
-        // element: </>,
-      },
-    ],
-  },
-]);
+const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <>
-      <Header />
-      <RouterProvider router={router} />
-      <Footer />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <div className="Wrap">
+        <Sidebar />
+        <Main />
+      </div>
+    </QueryClientProvider>
   );
 }
