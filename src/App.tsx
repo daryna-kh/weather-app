@@ -9,6 +9,7 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="Wrap">
+        <button></button>
         <Sidebar />
         <Main />
       </div>
