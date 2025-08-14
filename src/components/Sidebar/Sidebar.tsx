@@ -10,11 +10,11 @@ export const Sidebar = () => {
   const city = useCommonStore((state) => state.city);
 
   const fetchDataByCity = async (city_: string) => {
-    const responce = await getDataByCity(city_);
+    // const responce = await getDataByCity(city_);
   };
 
   useEffect(() => {
-    fetchDataByCity(city);
+    if (city.length > 0) fetchDataByCity(city);
   }, [city]);
 
   return (

@@ -1,4 +1,4 @@
-import { CityType } from "../city/types";
+import { CityType } from "@/api/getLocationList/types";
 import { city } from "./city";
 
 export const getCountryById = (name: string): CityType | null => {
