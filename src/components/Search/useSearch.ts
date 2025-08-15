@@ -5,12 +5,13 @@ import { useCommonStore } from "@/store/useCommonStore";
 import { cleanString } from "@/util/cleanString";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { OptionsType } from "./types";
 
 export const useSearch = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [debounceValue, setDebounceValue] = useState<string>("");
 
-  const setCity = useCommonStore((state) => state.setCity);
+  const setLocation = useCommonStore((state) => state.setLocation);
 
   const fetchSuggestions = async (val: string) => {
     try {
@@ -47,7 +48,7 @@ export const useSearch = () => {
       case "api":
         res = suggestion.res.data
           .filter((item) => item.type === "city" && item.address.name.includes(debounceValue))
-          .map((item) => ({ value: item.address.name, label: `${item.address.name}, ${item.display_address}` }));
+          .map((item) => ({ value: item.address.name, label: `${item.address.name}, ${item.display_address}`, lat: item.lat, lon: item.lon }));
         break;
       case "mock":
         res = suggestion.data
@@ -58,8 +59,8 @@ export const useSearch = () => {
     return res;
   };
 
-  const handleSelect = async (val: string, option: OptionsType) => {
-    setCity(val);
+  const handleSelect = async (option: OptionsType) => {
+    setLocation(option);
   };
 
   useEffect(() => {

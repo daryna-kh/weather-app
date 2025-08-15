@@ -11,8 +11,8 @@ export function App() {
       <div className="Wrap">
         <button></button>
         <Sidebar />
-        <Main />
       </div>
+      <Main />
     </QueryClientProvider>
   );
 }

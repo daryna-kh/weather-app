@@ -1,3 +1,9 @@
+import { Card } from "../Card/Card";
+
 export const Main = () => {
-  return <></>;
+  return (
+    <>
+      <Card />
+    </>
+  );
 };

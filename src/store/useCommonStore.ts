@@ -1,20 +1,20 @@
 import { WeatherResponse } from "@/api/getDataByCity/type";
+import { OptionsType } from "@/components/Search/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface CommonState {
-  city: string;
+  location: OptionsType | null;
   currentWeatherData: WeatherResponse | null;
-  setCity: (city: string) => void;
+  setLocation: (location: OptionsType) => void;
   setCurrentWeatherData: (data: WeatherResponse) => void;
 }
 
 export const useCommonStore = create<CommonState>()(
   devtools(
     (set) => ({
-      city: "",
       currentWeatherData: null,
-      setCity: (city: string) => set({ city }),
+      setLocation: (location) => set({ location }),
       setCurrentWeatherData: (data) =>
         set(() => ({
           currentWeatherData: data,
