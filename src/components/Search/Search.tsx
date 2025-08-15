@@ -15,7 +15,7 @@ export const Search = () => {
       options={getFilteredOptions()}
       onSearch={setInputValue}
       onFocus={handleFocus}
-      onSelect={(val, option) => handleSelect(val, option)}
+      onSelect={(option) => handleSelect(option)}
       placeholder="Search..."
     />
   );

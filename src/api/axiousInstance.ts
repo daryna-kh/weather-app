@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const weatherAPI = axios.create({
   baseURL: "https://api.openweathermap.org",
   timeout: 10000,
   headers: {
@@ -8,4 +8,14 @@ const axiosInstance = axios.create({
   },
 });
 
-export const { delete: del, get, post, put } = axiosInstance;
+const locationAPI = axios.create({
+  baseURL: "https://api.locationiq.com",
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const { delete: deleteWeather, get: getWeather, post: postWeather, put: putWeather } = weatherAPI;
+
+export const { delete: deleteLocation, get: getLocation, post: postLocation, put: putLocation } = locationAPI;

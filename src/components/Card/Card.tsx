@@ -1,6 +1,6 @@
 import { useCommonStore } from "@/store/useCommonStore";
 
-export const WeatherCard = () => {
+export const Card = () => {
   const data = useCommonStore((state) => state.currentWeatherData);
 
   return data ? (

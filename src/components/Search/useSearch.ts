@@ -1,23 +1,21 @@
-import { getCitiesList } from "@/api/getCitiesList/getCitiesList";
-import { getDataByCity } from "@/api/getDataByCity/getDataByCity";
-import { WeatherResponse } from "@/api/getDataByCity/type";
-import { CityType } from "@/mock/city/types";
+import { getLocationList } from "@/api/getLocationList/getLocationList";
+import { ApiLocationType, MockLocationType } from "@/api/getLocationList/types";
+import { getCountryById } from "@/mock/country/getCountryById";
 import { useCommonStore } from "@/store/useCommonStore";
 import { cleanString } from "@/util/cleanString";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { OptionsType } from "./types";
 
 export const useSearch = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [debounceValue, setDebounceValue] = useState<string>("");
-  const [currentCityData, setCurrentCityData] = useState<WeatherResponse[] | null>();
 
-  const setCity = useCommonStore((state) => state.setCity);
+  const setLocation = useCommonStore((state) => state.setLocation);
 
   const fetchSuggestions = async (val: string) => {
     try {
-      const responce = await getCitiesList(val);
-      return responce;
+      return await getLocationList(val);
     } catch (err) {
       console.warn("Can not get cities list", err);
       return null;
@@ -25,10 +23,10 @@ export const useSearch = () => {
   };
 
   const {
-    data: suggestion = [],
+    data: suggestion = null,
     isFetching,
     isError,
-  } = useQuery<CityType[] | null>({
+  } = useQuery<ApiLocationType | MockLocationType | null>({
     queryKey: ["suggestion", debounceValue],
     queryFn: () => fetchSuggestions(debounceValue),
     enabled: debounceValue.length >= 2,
@@ -42,14 +40,27 @@ export const useSearch = () => {
     }
 
     if (isError || !suggestion) {
-      return [{ value: "Error fetching data", disabled: true }];
+      return [{ value: "No results", disabled: true }];
     }
 
-    return suggestion.filter((item) => cleanString(item.name).includes(cleanString(debounceValue))).map((item) => ({ value: item.name }));
+    let res: OptionsType[];
+    switch (suggestion.type) {
+      case "api":
+        res = suggestion.res.data
+          .filter((item) => item.type === "city" && item.address.name.includes(debounceValue))
+          .map((item) => ({ value: item.address.name, label: `${item.address.name}, ${item.display_address}`, lat: item.lat, lon: item.lon }));
+        break;
+      case "mock":
+        res = suggestion.data
+          .filter((item) => cleanString(item.name).includes(cleanString(debounceValue)))
+          .map((item) => ({ value: item.name, label: `${item.name}, ${getCountryById(item.country_id)?.name || ""}` }));
+        break;
+    }
+    return res;
   };
 
-  const handleSelect = async (val: string, option: OptionsType) => {
-    setCity(val);
+  const handleSelect = async (option: OptionsType) => {
+    setLocation(option);
   };
 
   useEffect(() => {
