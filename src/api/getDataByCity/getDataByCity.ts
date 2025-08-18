@@ -1,4 +1,4 @@
-import { weatherApiKey } from "@/constans/api";
+import { weatherApiKey } from "@/share/constans/api";
 import { getWeather } from "../axiousInstance";
 import { WeatherResponse } from "./type";
 import { londonWeatherMocks } from "@/mock/getDataByCityMock/getDataByCityMock";

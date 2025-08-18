@@ -1,0 +1,40 @@
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.switch {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.option {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.active {
+  color: #333;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: white;
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+}
+
+.temp-switch.fahrenheit .temp-slider {
+  transform: translateX(100%);
+}
