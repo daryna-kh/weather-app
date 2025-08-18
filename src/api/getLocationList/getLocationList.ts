@@ -1,4 +1,4 @@
-import { locationApiKey } from "@/constans/api";
+import { locationApiKey } from "@/share/constans/api";
 import { getLocation } from "../axiousInstance";
 import { cleanString } from "@/util/cleanString";
 import { city as cities } from "@/mock/city/city";

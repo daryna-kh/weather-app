@@ -59,8 +59,17 @@ export const useSearch = () => {
     return res;
   };
 
-  const handleSelect = async (option: OptionsType) => {
+  const handleSelect = async (value: any, option: OptionsType) => {
     setLocation(option);
+  };
+
+  const handleKeyEventSelect = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, options: OptionsType[]) => {
+    if (e.key === "Enter") {
+      // setLocation(option); TO DO:
+      const value = e.currentTarget.value;
+      console.log("value:", value);
+      console.log("options:", options);
+    }
   };
 
   useEffect(() => {
@@ -71,5 +80,5 @@ export const useSearch = () => {
     return () => clearTimeout(handleInputTimeout);
   }, [inputValue]);
 
-  return { getFilteredOptions, setInputValue, handleSelect };
+  return { getFilteredOptions, setInputValue, handleSelect, handleKeyEventSelect };
 };

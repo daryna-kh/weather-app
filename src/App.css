@@ -1,7 +1,7 @@
+@import './_antd.scss';
+
 .Wrap {
-  background-color: #f7f6f9;
-  padding: 40px;
-  margin: 40px;
-  border-radius: 100px;
-  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }

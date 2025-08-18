@@ -1,0 +1,92 @@
+.location {
+  font-size: 24px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.locationIcon {
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.tempDisplay {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.temp {
+  font-size: 72px;
+  font-weight: 300;
+  position: relative;
+
+  &::after {
+    content: "°";
+    position: absolute;
+    top: 10px;
+    right: -25px;
+    font-size: 40px;
+  }
+}
+
+// .subTemp {
+//   font-size: 72px;
+//   font-weight: 300;
+//   position: relative;
+
+//   &::after {
+//     content: "°";
+//     position: absolute;
+//     top: 10px;
+//     right: -25px;
+//     font-size: 40px;
+//   }
+// }
+
+.iconContainer {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.weatherIcon {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.weatherDescription {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+  text-transform: capitalize;
+}
