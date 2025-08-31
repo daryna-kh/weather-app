@@ -90,3 +90,38 @@
   font-size: 18px;
   text-transform: capitalize;
 }
+
+.weatherDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+.detailCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.detailIcon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.detailLabel {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+.detailValue {
+  font-size: 24px;
+  font-weight: 500;
+}

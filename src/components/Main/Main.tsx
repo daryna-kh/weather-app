@@ -14,11 +14,13 @@ export const Main = () => {
 
     return (
       <>
-        <CurrentWeather />
+        <div className={style.content}>
+          <CurrentWeather />
+        </div>
         <Forecast />
       </>
     );
   }
 
-  return <div className={style.content}>{renderContent()}</div>;
+  return renderContent();
 };
