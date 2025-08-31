@@ -4,9 +4,10 @@ import { getWeatherData } from "@/api/getWeatherData/getWeatherData";
 import { WeatherResponse } from "@/api/getWeatherData/types";
 import { useCommonStore } from "@/store/useCommonStore";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const useMain = () => {
+  const [hasCoords, setHasCoords] = useState(false);
   const location = useCommonStore((s) => s.location);
 
   const currentFromStore = useCommonStore((s) => s.currentWeatherData);
@@ -14,9 +15,6 @@ export const useMain = () => {
 
   const forecastFromStore = useCommonStore((s) => s.forecastData);
   const setForecast = useCommonStore((s) => s.setForecastData);
-
-  const hasCoords = !location?.lat && !location?.lon;
-  console.log(location?.lat, location?.lon);
 
   const {
     data: currentData,
@@ -28,6 +26,7 @@ export const useMain = () => {
     enabled: hasCoords,
     staleTime: 5 * 60 * 1000,
     queryFn: async () => {
+      console.log(location?.lat, location?.lon);
       if (!hasCoords) throw new Error("No location");
       if (!location?.lat || !location?.lon) throw new Error("No location");
       const res = await getWeatherData(location?.lat, location?.lon);
@@ -53,11 +52,21 @@ export const useMain = () => {
   });
 
   useEffect(() => {
+    if (location?.lat && location?.lon) {
+      setHasCoords(true);
+    } else {
+      setHasCoords(false);
+    }
+  }, [location]);
+
+  useEffect(() => {
     if (currentData) setCurrent(currentData);
+    console.log(currentData);
   }, [currentData, setCurrent]);
 
   useEffect(() => {
     if (forecastData) setForecast(forecastData);
+    console.log(forecastData);
   }, [forecastData, setForecast]);
 
   const isInitialLoading = useMemo(

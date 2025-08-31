@@ -1,7 +1,7 @@
 import { weatherApiKey } from "@/share/constans/api";
 import { getWeather } from "../axiousInstance";
-import { WeatherResponse } from "./type";
 import { londonWeatherMocks } from "@/mock/getDataByCityMock/getDataByCityMock";
+import { WeatherResponse } from "../getWeatherData/types";
 
 export async function getDataByCity(cityName: string): Promise<WeatherResponse[]> {
   if (weatherApiKey) {

@@ -1,0 +1,96 @@
+.forecast {
+  margin-top: 30px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.day {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  animation: slideUp 0.5s ease backwards;
+}
+
+.day:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.day:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.day:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.day:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.day:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.day:hover {
+  transform: translateY(-5px) scale(1.02);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.date {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.time {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 15px;
+}
+
+.temp {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 14px;
+  opacity: 0.9;
+  text-transform: capitalize;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
