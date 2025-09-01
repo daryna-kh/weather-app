@@ -1,8 +1,8 @@
 import { locationApiKey } from "@/share/constans/api";
 import { getLocation } from "../axiousInstance";
-import { cleanString } from "@/util/cleanString";
 import { city as cities } from "@/mock/city/city";
 import { ApiLocationType, MockLocationType } from "./types";
+import { cleanString } from "@/util";
 
 export const getLocationList = async (val: string): Promise<ApiLocationType | MockLocationType> => {
   if (locationApiKey) {

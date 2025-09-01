@@ -1,10 +1,15 @@
 import { useCommonStore } from "@/store/useCommonStore";
 import style from "./Forecast.module.scss";
-import { convertTemperature } from "@/util/convertTemperature";
+import { convertTemperature, findIcon } from "@/util";
 export const Forecast = () => {
   const data = useCommonStore((s) => s.forecastData);
   const tempUnit = useCommonStore((s) => s.tempUnit);
   if (!data) return <>No data...</>;
+
+  const forecastsAtNoon = data.list.filter((item) => {
+    const date = new Date(item.dt * 1000);
+    return date.getUTCHours() === 12;
+  });
 
   return (
     <div className={style.forecast}>
@@ -19,12 +24,13 @@ export const Forecast = () => {
       </h2>
 
       <div className={style.container}>
-        {data.list.map((el, i) => (
+        {forecastsAtNoon.map((el, i) => (
           <div className={style.day}>
-            <div className={style.date}>{el.dt}</div>
-            <div className={style.time}>{el.dt_txt}</div>
-            <img className={style.icon} src={`/public/assets/images/icons/${el.weather[0].icon}.png`} alt="Icon" />
-            <div className={style.temp}>{convertTemperature(el.main.temp, tempUnit)}</div>
+            <div className={style.date}>{new Date(el.dt * 1000).toISOString().split("T")[0]}</div>
+            <img className={style.icon} src={`/public/assets/images/icons/${findIcon(el.weather[0].id)}.png`} alt="Icon" />
+            <div className={style.temp}>
+              {convertTemperature(el.main.temp, tempUnit)}°{tempUnit}
+            </div>
             <div className={style.desc}>{el.weather[0].description}</div>
           </div>
         ))}

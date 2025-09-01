@@ -2,7 +2,7 @@ import { LocationIcon } from "@/share/icons/LocationIcon";
 import { useCommonStore } from "@/store/useCommonStore";
 import style from "./CurrentWeather.module.scss";
 import { Arrow } from "@/share/icons/Arrow";
-import { convertTemperature } from "@/util/convertTemperature";
+import { convertTemperature, findIcon } from "@/util";
 
 export const CurrentWeather = () => {
   const data = useCommonStore((s) => s.currentWeatherData);
@@ -18,11 +18,13 @@ export const CurrentWeather = () => {
 
       <div className={style.main}>
         <div className={style.tempDisplay}>
-          <div className={style.temp}>{convertTemperature(data.main.temp, tempUnit)}</div>
+          <div className={style.temp}>
+            {convertTemperature(data.main.temp, tempUnit)}°{tempUnit}
+          </div>
           {data.weather.map((weather, i) => (
             <div key={`${weather.id}-${i}`}>
               <div className={style.iconContainer}>
-                <img className={style.weatherIcon} src={`/public/assets/images/icons/${weather.icon}.png`} alt={weather.main} />
+                <img className={style.weatherIcon} src={`/public/assets/images/icons/${findIcon(weather.id)}.png`} alt={weather.main} />
               </div>
               <div className={style.weatherDescription}>{weather.description}</div>
             </div>
