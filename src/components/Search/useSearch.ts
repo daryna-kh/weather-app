@@ -2,10 +2,10 @@ import { getLocationList } from "@/api/getLocationList/getLocationList";
 import { ApiLocationType, MockLocationType } from "@/api/getLocationList/types";
 import { getCountryById } from "@/mock/country/getCountryById";
 import { useCommonStore } from "@/store/useCommonStore";
-import { cleanString } from "@/util/cleanString";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { OptionsType } from "./types";
+import { cleanString } from "@/util";
 
 export const useSearch = () => {
   const [inputValue, setInputValue] = useState<string>("");
