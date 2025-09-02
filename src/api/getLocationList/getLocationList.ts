@@ -6,7 +6,7 @@ import { cleanString } from "@/util";
 
 export const getLocationList = async (val: string): Promise<ApiLocationType | MockLocationType> => {
   if (locationApiKey) {
-    const data = await getLocation<Location[], any>(`/v1/autocomplete?dedupe=1&key=${locationApiKey}&q=${val}&limit=5normalizeaddress=1`);
+    const data = await getLocation<Location[], any>(`/v1/autocomplete?dedupe=1&key=${locationApiKey}&q=${val}&limit=5&tag=place:city&normalizecity=1`);
     return { type: "api", res: data };
   } else {
     return new Promise((resolve) => {

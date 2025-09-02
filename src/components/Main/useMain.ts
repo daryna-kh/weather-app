@@ -26,7 +26,6 @@ export const useMain = () => {
     enabled: hasCoords,
     staleTime: 5 * 60 * 1000,
     queryFn: async () => {
-      console.log(location?.lat, location?.lon);
       if (!hasCoords) throw new Error("No location");
       if (!location?.lat || !location?.lon) throw new Error("No location");
       const res = await getWeatherData(location?.lat, location?.lon);
@@ -61,12 +60,10 @@ export const useMain = () => {
 
   useEffect(() => {
     if (currentData) setCurrent(currentData);
-    console.log(currentData);
   }, [currentData, setCurrent]);
 
   useEffect(() => {
     if (forecastData) setForecast(forecastData);
-    console.log(forecastData);
   }, [forecastData, setForecast]);
 
   const isInitialLoading = useMemo(
