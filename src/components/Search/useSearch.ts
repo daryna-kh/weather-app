@@ -9,6 +9,7 @@ import { cleanString } from "@/util";
 
 export const useSearch = () => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [picked, setPicked] = useState<OptionsType | null>(null);
   const [debounceValue, setDebounceValue] = useState<string>("");
 
   const setLocation = useCommonStore((state) => state.setLocation);
@@ -36,11 +37,11 @@ export const useSearch = () => {
 
   const getFilteredOptions = (): OptionsType[] => {
     if (isFetching) {
-      return [{ value: "Searching...", disabled: true }];
+      return [{ value: "Searching...", label: "", disabled: true }];
     }
 
     if (isError || !suggestion) {
-      return [{ value: "No results", disabled: true }];
+      return [{ value: "No results", label: "", disabled: true }];
     }
 
     let res: OptionsType[];
@@ -48,27 +49,26 @@ export const useSearch = () => {
       case "api":
         res = suggestion.res.data
           .filter((item) => item.type === "city" && item.address.name.includes(debounceValue))
-          .map((item) => ({ value: item.address.name, label: `${item.address.name}, ${item.display_address}`, lat: item.lat, lon: item.lon }));
+          .map((item) => ({ value: `${item.lat}-${item.lon}`, label: `${item.address.name}, ${item.display_address}`, lat: item.lat, lon: item.lon }));
         break;
       case "mock":
         res = suggestion.data
           .filter((item) => cleanString(item.name).includes(cleanString(debounceValue)))
-          .map((item) => ({ value: item.name, label: `${item.name}, ${getCountryById(item.country_id)?.name || ""}` }));
+          .map((item, i) => ({ value: `${item.name}-${i}`, label: `${item.name}, ${getCountryById(item.country_id)?.name || ""}` }));
         break;
     }
     return res;
   };
 
   const handleSelect = async (value: any, option: OptionsType) => {
+    setInputValue(option.label);
+    setPicked(option);
     setLocation(option);
   };
 
   const handleKeyEventSelect = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, options: OptionsType[]) => {
     if (e.key === "Enter") {
-      // setLocation(option); TO DO:
       const value = e.currentTarget.value;
-      console.log("value:", value);
-      console.log("options:", options);
     }
   };
 
@@ -80,5 +80,5 @@ export const useSearch = () => {
     return () => clearTimeout(handleInputTimeout);
   }, [inputValue]);
 
-  return { getFilteredOptions, setInputValue, handleSelect, handleKeyEventSelect };
+  return { inputValue, getFilteredOptions, setInputValue, handleSelect, handleKeyEventSelect };
 };

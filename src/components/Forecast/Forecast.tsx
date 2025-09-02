@@ -25,7 +25,7 @@ export const Forecast = () => {
 
       <div className={style.container}>
         {forecastsAtNoon.map((el, i) => (
-          <div className={style.day}>
+          <div className={style.day} key={`forecast-${el.dt}-${i}`}>
             <div className={style.date}>{new Date(el.dt * 1000).toISOString().split("T")[0]}</div>
             <img className={style.icon} src={`/public/assets/images/icons/${findIcon(el.weather[0].id)}.png`} alt="Icon" />
             <div className={style.temp}>

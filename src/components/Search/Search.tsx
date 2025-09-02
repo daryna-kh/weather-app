@@ -5,7 +5,7 @@ import style from "./Search.module.scss";
 import { SearchIcon } from "@/share/icons/SearchIcon";
 
 export const Search = () => {
-  const { getFilteredOptions, setInputValue, handleSelect, handleKeyEventSelect } = useSearch();
+  const { getFilteredOptions, setInputValue, handleSelect, handleKeyEventSelect, inputValue } = useSearch();
 
   function handleFocus() {
     getCurrentPosition();
@@ -18,6 +18,7 @@ export const Search = () => {
       <SearchIcon name={style.icon} />
       <AutoComplete
         options={options}
+        value={inputValue}
         onSearch={setInputValue}
         onFocus={handleFocus}
         onSelect={(value, option) => handleSelect(value, option)}

@@ -10,9 +10,10 @@ export function cleanString(s: string): string {
 }
 
 export function convertTemperature(val: number, param: TempUnit) {
+  if (val < 0) return param === "C" ? -273 : -460;
   return param === "C" ? Math.round(val - 273.15) : Math.round(((val - 273.15) * 9) / 5 + 32);
 }
 
 export function findIcon(val: number) {
-  return weatherVariants.find((item) => item.id === val)?.icon;
+  return weatherVariants.find((item) => item.id === val)?.icon || "no-icon";
 }
