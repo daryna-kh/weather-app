@@ -1,4 +1,33 @@
-import { convertTemperature, findIcon } from "./index";
+import { cleanString, convertTemperature, findIcon } from "./index";
+
+describe("cleanString", () => {
+  test("removes diacritic characters", () => {
+    expect(cleanString("café")).toBe("cafe");
+    expect(cleanString("mañana")).toBe("manana");
+    expect(cleanString("über")).toBe("uber");
+  });
+
+  test("removes special characters and spaces", () => {
+    expect(cleanString("hello world!")).toBe("helloworld");
+    expect(cleanString("foo_bar-baz")).toBe("foobarbaz");
+    expect(cleanString("test@123")).toBe("test123");
+  });
+
+  test("works with Cyrillic characters", () => {
+    expect(cleanString("Привет, мир!")).toBe("приветмир");
+    expect(cleanString("Ёлка")).toBe("елка");
+  });
+
+  test("converts string to lowercase", () => {
+    expect(cleanString("ABCDEF")).toBe("abcdef");
+    expect(cleanString("ТЕКСТ")).toBe("текст");
+  });
+
+  test("returns empty string for empty input or only special characters", () => {
+    expect(cleanString("")).toBe("");
+    expect(cleanString("!@#$%^&*()")).toBe("");
+  });
+});
 
 describe("find icon util", () => {
   test("success", () => {

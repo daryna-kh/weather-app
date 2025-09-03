@@ -1,20 +1,6 @@
-import { ForecastResponse } from "@/api/getForecastData/types";
-import { WeatherResponse } from "@/api/getWeatherData/types";
-import { OptionsType } from "@/components/Search/types";
-import { TempUnit } from "@/global";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-
-interface CommonState {
-  location: OptionsType | null;
-  currentWeatherData: WeatherResponse | null;
-  forecastData: ForecastResponse | null;
-  tempUnit: TempUnit;
-  setLocation: (location: OptionsType) => void;
-  setCurrentWeatherData: (data: WeatherResponse) => void;
-  setForecastData: (data: ForecastResponse) => void;
-  setTempUnit: (unit: TempUnit) => void;
-}
+import { CommonState } from "./type";
 
 export const useCommonStore = create<CommonState>()(
   devtools(
