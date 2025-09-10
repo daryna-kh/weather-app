@@ -48,7 +48,7 @@ export const useSearch = () => {
     switch (suggestion.type) {
       case "api":
         res = suggestion.res.data
-          .filter((item) => item.type === "city" && item.address.name.includes(debounceValue))
+          .filter((item) => item.type === "city" && cleanString(item.address.name).includes(cleanString(debounceValue)))
           .map((item) => ({ value: `${item.lat}-${item.lon}`, label: `${item.address.name}, ${item.display_address}`, lat: item.lat, lon: item.lon }));
         break;
       case "mock":
